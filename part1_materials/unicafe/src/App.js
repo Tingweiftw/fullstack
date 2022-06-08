@@ -1,8 +1,11 @@
 import { useState } from 'react'
 
-const Display = ({label, counter }) => {
+const StatisticLine  = ({text, value }) => {
     return (
-        <div>{label}: {counter}</div>
+        <tr>
+            <td>{text}</td>
+            <td>{value}</td>
+        </tr>
     )
 }
 
@@ -23,12 +26,14 @@ const Statistics = (props) => {
     else {
         return (
             <div>
-                <Display label = {"Good"} counter = {props.good}/>
-                <Display label = {"Neutral"} counter = {props.neutral}/>
-                <Display label = {"Bad"} counter = {props.bad}/>
-                <Display label = {"All"} counter = {props.all}/>
-                <Display label = {"Average"} counter = {props.average}/>
-                <Display label = {"Positive"} counter = {props.positive}/>
+                <table><tbody>
+                <StatisticLine text = {"Good"} value = {props.good}/>
+                <StatisticLine text = {"Neutral"} value = {props.neutral}/>
+                <StatisticLine text = {"Bad"} value = {props.bad}/>
+                <StatisticLine text = {"All"} value = {props.all}/>
+                <StatisticLine text = {"Average"} value = {props.average}/>
+                <StatisticLine text = {"Positive"} value = {props.positive}/>
+                </tbody></table>
             </div>
         )
     }
@@ -44,8 +49,8 @@ const App = () => {
   const voteNeutral = () => setNeutral(neutral+1)
   const voteBad = () => setBad(bad+1)
   const sumAll = () => good+bad+neutral
-  const averageAll = () => (good*1+bad*-1+neutral*0) / sumAll()
-  const positivePct = () => good / sumAll() * 100
+  const averageAll = () =>  ((good*1+bad*-1+neutral*0) / sumAll()).toFixed(2)
+  const positivePct = () => (good / sumAll() * 100).toFixed(2)
 
   return (
     <div>
