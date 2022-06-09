@@ -1,11 +1,5 @@
 import { useState } from 'react'
-
-const Contact = ({person}) => {
-  return (
-    <div>{person.name} {person.number}</div>
-  )
-
-}
+import Persons from './component/Persons'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -36,7 +30,6 @@ const App = () => {
       setNewName("")
     }
   }
-
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -46,7 +39,6 @@ const App = () => {
   const handleFilterNameChange = (event) => {
     setFilterName(event.target.value)
   }
-
   const personsToShow = (filterName === "")
     ? persons
     : persons.filter(p => p.name.toLowerCase().includes(filterName))
@@ -81,9 +73,7 @@ const App = () => {
           />
         </div>
       </form>
-      {personsToShow.map(person =>
-        <Contact key= {person.id} person={person}/>
-      )}
+      <Persons persons={personsToShow}/>
     </div>
   )
 }
