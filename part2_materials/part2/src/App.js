@@ -2,8 +2,6 @@ import Note from './component/Note'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-
-
 const App = (props) => {
   //actual list of notes
   const [notes, setNotes] = useState([]) 
