@@ -48,6 +48,21 @@ const App = () => {
   const voteGood = () => setGood(good+1)
   const voteNeutral = () => setNeutral(neutral+1)
   const voteBad = () => setBad(bad+1)
+
+// save clicks of each button to own state (better answer)
+//   const [clicks, setClicks] = useState({
+//         good: 0, neutral: 0, bad: 0
+//    })
+
+//   const handleGoodClick = () =>
+//     setClicks({...clicks, good: clicks.good + 1})
+
+//   const handleNeutralClick = () =>
+//     setClicks({...clicks, neutral: clicks.neutral + 1})
+
+//   const handleBadClick = () =>
+//     setClicks({...clicks, bad: clicks.bad + 1})
+
   const sumAll = () => good+bad+neutral
   const averageAll = () =>  ((good*1+bad*-1+neutral*0) / sumAll()).toFixed(2)
   const positivePct = () => (good / sumAll() * 100).toFixed(2)
