@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import Persons from './component/Persons'
+import PersonForm from './component/PersonForm'
+import Filter from './component/Filter'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -28,6 +30,7 @@ const App = () => {
       }
       setPersons(persons.concat(personObject))
       setNewName("")
+      setNewNumber("")
     }
   }
   const handleNameChange = (event) => {
@@ -38,41 +41,28 @@ const App = () => {
   }
   const handleFilterNameChange = (event) => {
     setFilterName(event.target.value)
+    console.log(personsToShow)
   }
   const personsToShow = (filterName === "")
     ? persons
-    : persons.filter(p => p.name.toLowerCase().includes(filterName))
+    : persons.filter(p => p.name.toLowerCase().includes(filterName.toLowerCase()))
 
   return (
     <div>
       <h2>Phonebook</h2>
       <h2>Add new contacts</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input 
-            value = {newName}
-            onChange = {handleNameChange}
-          />
-        </div>
-        <div>
-          number: <input 
-            value = {newNumber}
-            onChange = {handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm 
+        onSubmit={addName}
+        nameValue={newName}
+        onChangeName={handleNameChange}
+        numberValue={newNumber}
+        onChangeNumber={handleNumberChange}
+      />
       <h2>Numbers</h2>
-      <form>
-        <div>
-          filter shown with <input
-            value = {filterName}
-            onChange = {handleFilterNameChange}
-          />
-        </div>
-      </form>
+      <Filter 
+        nameToFilter = {filterName}
+        onFilterChange = {handleFilterNameChange}
+      />
       <Persons persons={personsToShow}/>
     </div>
   )
