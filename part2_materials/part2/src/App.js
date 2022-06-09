@@ -1,21 +1,27 @@
 import Note from './component/Note'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-axios
-  .get('http://localhost:3001/notes')
-  .then(response =>{
-    const notes = response.data
-    console.log(notes)
-})
+
 
 const App = (props) => {
   //actual list of notes
-  const [notes, setNotes] = useState(props.notes) 
+  const [notes, setNotes] = useState([]) 
   //placeholder text for input box and for state changes
   const [newNote, setNewNote] = useState('a new note...')
   //to show all based on status
   const [showAll, setShowAll] = useState(true)
+
+  const hook = () => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/notes')
+      .then(response => {
+        console.log('promise fulfilled')
+        setNotes(response.data)
+    })
+  }
+  useEffect(hook, []) // empty array means only run once first render
 
   const addNote = (event) => {
     event.preventDefault()
