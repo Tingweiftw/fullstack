@@ -1,4 +1,3 @@
-
 const CountryDetail = ({country}) => {
     return (
         <div>
@@ -12,15 +11,16 @@ const CountryDetail = ({country}) => {
                     <li>{lang}</li>
                 )}
             </ul>
-            <img src={country.flags.png}></img>
+            <img src={country.flags.png} alt=""></img>
             
         </div>
     )
 
 }
 
-const Countries = ({countries}) => {
+const Countries = ({countries, setCountries}) => {
     const numOfResults = countries.length
+    
     if (numOfResults > 10) {
         return <div>Too many matches, specify another filter</div>
     }
@@ -33,7 +33,12 @@ const Countries = ({countries}) => {
         return (
             <div>
                 {countries.map(country => 
-                    <div>{country.name.common}</div>
+                        <div>
+                            {country.name.common}
+                            <button onClick={() => setCountries([country])}>
+                                show
+                            </button> 
+                        </div>
                 )}
             </div>
         )
