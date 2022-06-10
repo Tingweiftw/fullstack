@@ -12,7 +12,7 @@ const CountryDetail = ({country}) => {
                     <li>{lang}</li>
                 )}
             </ul>
-            <img src={country.flags.svg}></img>
+            <img src={country.flags.png}></img>
             
         </div>
     )
