@@ -1,4 +1,39 @@
-const CountryDetail = ({country}) => {
+
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+const api_key = process.env.REACT_APP_API_KEY
+console.log(api_key)
+const CountryDetail = ({country}) => { 
+    const [weather, setWeather] = useState([])
+    const hook = () => {
+        console.log('effect')
+        axios
+          .get('https://restcountries.com/v3.1/all')
+          .then(response =>{
+            console.log('promise fulfilled')
+          })
+      }
+    useEffect(hook, [])
+
+    useEffect(() => {
+        const params = {
+            access_key: api_key,
+            query: country.capital
+        }
+        axios
+            .get('http://api.weatherstack.com/current', {params})
+            .then(response => {
+                const apiResponse = response.data
+                console.log(apiResponse)
+            })
+            .catch(error =>{
+                console.log(error)
+            })
+
+    })
+
+
+
     return (
         <div>
             <h1>{country.name.common}</h1>
@@ -7,11 +42,13 @@ const CountryDetail = ({country}) => {
             <br></br>
             <h2>languages</h2>
             <ul>
-                {Object.values(country.languages).map(lang =>
-                    <li>{lang}</li>
+                {Object.values(country.languages).map(lang=>
+                    <li key={lang}>{lang}</li>
                 )}
             </ul>
             <img src={country.flags.png} alt=""></img>
+            <h2>Weather in {country.capital}</h2>
+            <p>temperature:{} Celsius</p>
             
         </div>
     )
@@ -33,7 +70,7 @@ const Countries = ({countries, setCountries}) => {
         return (
             <div>
                 {countries.map(country => 
-                        <div>
+                        <div key={country.name.common}>
                             {country.name.common}
                             <button onClick={() => setCountries([country])}>
                                 show
