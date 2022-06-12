@@ -1,38 +1,35 @@
 
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-const api_key = process.env.REACT_APP_API_KEY
-console.log(api_key)
+import React from 'react'
+// const api_key = process.env.REACT_APP_API_KEY
+
 const CountryDetail = ({country}) => { 
-    const [weather, setWeather] = useState([])
-    const hook = () => {
-        console.log('effect')
-        axios
-          .get('https://restcountries.com/v3.1/all')
-          .then(response =>{
-            console.log('promise fulfilled')
-          })
-      }
-    useEffect(hook, [])
+    // const [weather, setWeather] = useState([])
+    // const hook = () => {
+    //     console.log('effect')
+    //     axios
+    //       .get('https://restcountries.com/v3.1/all')
+    //       .then(response =>{
+    //         console.log('promise fulfilled')
+    //       })
+    //   }
+    // useEffect(hook, [])
 
-    useEffect(() => {
-        const params = {
-            access_key: api_key,
-            query: country.capital
-        }
-        axios
-            .get('http://api.weatherstack.com/current', {params})
-            .then(response => {
-                const apiResponse = response.data
-                console.log(apiResponse)
-            })
-            .catch(error =>{
-                console.log(error)
-            })
+    // useEffect(() => {
+    //     const params = {
+    //         access_key: api_key,
+    //         query: country.capital
+    //     }
+    //     axios
+    //         .get('http://api.weatherstack.com/current', {params})
+    //         .then(response => {
+    //             const apiResponse = response.data
+    //             console.log(apiResponse)
+    //         })
+    //         .catch(error =>{
+    //             console.log(error)
+    //         })
 
-    })
-
-
+    // })
 
     return (
         <div>
