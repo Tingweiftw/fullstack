@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react'
 import Persons from './component/Persons'
 import PersonForm from './component/PersonForm'
 import Filter from './component/Filter'
-import axios from 'axios'
+import personService from './services/personService'
 
 const App = () => {
 
   const [persons, setPersons] = useState([])
   const hook = () => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
+    personService
+      .getAll()
+      .then(initialContacts => {
         console.log('promised fulfilled')
-        setPersons(response.data)
+        setPersons(initialContacts)
       })
   }
   useEffect(hook, [])
@@ -32,13 +32,18 @@ const App = () => {
     }
     else {
       const personObject = {
-        id: persons.length + 1,
         name: newName,
-        number: newNumber
+        number: newNumber,
+        id: persons.length + 1
       }
-      setPersons(persons.concat(personObject))
-      setNewName("")
-      setNewNumber("")
+      personService
+        .create(personObject)
+        .then(returnedContact => {
+          console.log('saved')
+          setPersons(persons.concat(returnedContact))
+          setNewName("")
+          setNewNumber("")
+        }) 
     }
   }
   const handleNameChange = (event) => {
