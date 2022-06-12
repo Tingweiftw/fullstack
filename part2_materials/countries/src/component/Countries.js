@@ -1,36 +1,22 @@
-
-import React from 'react'
-// const api_key = process.env.REACT_APP_API_KEY
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+const api_key = process.env.REACT_APP_API_KEY
 
 const CountryDetail = ({country}) => { 
-    // const [weather, setWeather] = useState([])
-    // const hook = () => {
-    //     console.log('effect')
-    //     axios
-    //       .get('https://restcountries.com/v3.1/all')
-    //       .then(response =>{
-    //         console.log('promise fulfilled')
-    //       })
-    //   }
-    // useEffect(hook, [])
+    const [weather, setWeather] = useState({});
 
-    // useEffect(() => {
-    //     const params = {
-    //         access_key: api_key,
-    //         query: country.capital
-    //     }
-    //     axios
-    //         .get('http://api.weatherstack.com/current', {params})
-    //         .then(response => {
-    //             const apiResponse = response.data
-    //             console.log(apiResponse)
-    //         })
-    //         .catch(error =>{
-    //             console.log(error)
-    //         })
+    useEffect(() => {
+        axios
+          .get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${country.capital}`)
+          .then(response =>{
+                setWeather(response.data.current)
+          })
+          .catch(error=> {
+            console.log(error)
+          })
 
-    // })
-
+      }, [country.capital])
+    console.log(weather)
     return (
         <div>
             <h1>{country.name.common}</h1>
@@ -45,11 +31,11 @@ const CountryDetail = ({country}) => {
             </ul>
             <img src={country.flags.png} alt=""></img>
             <h2>Weather in {country.capital}</h2>
-            <p>temperature:{} Celsius</p>
-            
+            <p>temperature: {weather.temperature} Celsius</p>
+            <img src={weather.weather_icons} alt=""></img>
+            <p>wind speed: {weather.wind_speed} m/s</p>
         </div>
     )
-
 }
 
 const Countries = ({countries, setCountries}) => {
