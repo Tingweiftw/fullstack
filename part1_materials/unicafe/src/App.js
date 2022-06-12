@@ -16,7 +16,7 @@ const Button = ({ onClick, text }) => (
 )
 
 const Statistics = (props) => {
-    if (props.all == 0){
+    if (props.all === 0){
         return (
             <div>
                 no feedback
