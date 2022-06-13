@@ -25,10 +25,22 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault()
     if (persons.map(person => person.name).some((p) => p === newName)) {
-      alert(`${newName} exist in phonebook`)
+      if(window.confirm(`${newName} is already added to phonebook, replaced the old number with new one?`)){
+        const personObject = persons.find(n => n.name === newName)
+        personObject['number'] = newNumber
+        personService
+          .update(personObject.id, personObject)
+          .then(returnedContact => {
+            console.log('updated')
+          })
+      }
+
     }
     else if (newName === "") {
       alert("Please enter a name")
+    }
+    else if (newNumber === "") {
+      alert("Please enter a number")
     }
     else {
       const personObject = {
@@ -41,10 +53,21 @@ const App = () => {
         .then(returnedContact => {
           console.log('saved')
           setPersons(persons.concat(returnedContact))
-          setNewName("")
-          setNewNumber("")
         }) 
     }
+    setNewName("")
+    setNewNumber("")
+  }
+  const deleteName = (id) => {
+    if (window.confirm(`Delete ${persons.find(n => n.id === id).name} ?`)) {
+      personService
+      .deleteContact(id)
+      .then(returnedContact => {
+        console.log(`deleted ${id}`)
+        setPersons(persons.filter(p => p.id != id))
+      })
+    }
+    
   }
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -76,7 +99,7 @@ const App = () => {
         nameToFilter = {filterName}
         onFilterChange = {handleFilterNameChange}
       />
-      <Persons persons={personsToShow}/>
+      <Persons persons={personsToShow} deleteName={deleteName}/>
     </div>
   )
 }
