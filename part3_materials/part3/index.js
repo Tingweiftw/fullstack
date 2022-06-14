@@ -77,6 +77,17 @@ app.post('/api/notes', (request, response) => {
     response.json(note)
   })
 
+app.put('/api/notes/:id',(request,response) => {
+
+    const id = Number(request.params.id)
+    const oldNote = notes.find(n => n.id === id)
+    const newNote = {...oldNote, 
+      content: request.body.content,
+      important: request.body.important
+    }
+    notes = notes.map(note => note.id !== id ? note : newNote)
+    response.json(newNote)
+})
   
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

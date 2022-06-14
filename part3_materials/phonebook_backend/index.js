@@ -92,6 +92,16 @@ app.post('/api/persons', (request, response) => {
     persons = persons.concat(person)
     response.json(person)
   })
+
+app.put('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const oldContact = persons.find(person => person.id === id)
+    const newContact = {...oldContact,
+        number: request.body.number
+    }
+    persons = persons.map(person => person.id !== id ? person : newContact)
+    response.send(newContact)
+})
   
 const PORT = 3001
 app.listen(PORT, () => {
